@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# login before using this wrapper:
+# $ vault login -method=github
+
+export VAULT_ADDR=https://vault-stage.b17g.services
+
+fzf='fzf --reverse --cycle'
+vault_base='sec/int'
+reached_secret=false
+
+while [[ $reached_secret == false ]]; do
+  picked=$(vault list $vault_base | sed '1,2d' | $fzf)
+
+  if [[ "${picked: -1}" == '/' ]]
+    then vault_base="$vault_base/$picked" && continue
+    else reached_secret=true && vault read $vault_base/$picked
+  fi
+done
