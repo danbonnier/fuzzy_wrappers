@@ -1,7 +1,7 @@
 # fuzzy_wrappers
 Fuzzy finding things
 
-| wraps | desc |
-|-------|------|
-| f_sman | online-manuals by section |
-| f_vault | read [vault](https://www.vaultproject.io) data/secrets |
+| wraps |  name   |           desc            |
+|-------|---------|---------------------------|
+| `man`   | f_sman  | online-manuals by section |
+| `vault` | f_vault | read [vault](https://www.vaultproject.io) data/secrets |
