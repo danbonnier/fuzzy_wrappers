@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+[[ -z $1 ]] && exit
+
+show() { [[ $(file $1|grep gzip) ]] && gzcat $1 || cat $1 ;}
+manpath='/usr/local/share/man/man' ; fzf='fzf --reverse --cycle'
+
+[[ $1 == [135678] ]] && cmd=$(ls ${manpath}$1|cut -d\. -f1|$fzf)
+[[ $1 != [0-9]    ]] && cmd=$1
+
+manfile=$(man -w $cmd) || exit 1
+section=$(show $manfile | egrep '^(.Sh|.SH|.SS)'|cut -b5-|$fzf)
+section=$(echo $section|tr -d '"')
+
+man -P "less -Gp '^\ *$section'" $cmd
+
